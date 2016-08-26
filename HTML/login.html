@@ -28,26 +28,33 @@
 		<script src="http://malsup.github.com/jquery.form.js"></script>
 		<script>
 			$(document).ready(function(){
+				//Load navigation bar into the navigationDiv
 				$("#navigationDiv").load("navigation-bar.html");
 
+				// Using ajax forms plugin to post to the php script via AJAX - no page refresh required
 				$("#loginForm").ajaxForm(function(data, status){
 					if (status == "success"){
+						// If login fails, tell user what the error was, and add red box shadow to the username/pass fielda
 						if (!data.includes('Redirecting')){
 							alert(data);
 							$(".loginField").addClass("loginFailed");
 						}
+						// If there are no issues, bring the user to the salary tool
 						else{
 							alert(data);
 							window.location = "salary-calculation-tool.html";
 						}
 					}
+					// Occurs on AJAX error - there should be no reason to recieve this error, unless the server isn't configured properly
 					else{
 						alert("Something went wrong!");
 					}
 
 				});
 
+				// jQuery on function to easily combine multiple events on one object
 				$(".loginField").on({
+					// On focus, if the red shadow is applied, remove and add the standard blue shadow
 					focus: function()
 					{
 						if ($(this).hasClass("loginFailed"))
@@ -56,6 +63,7 @@
 						}
 						$(this).addClass("shadow");
 					},
+					// On blur, remove the shadow effect - the field is no longer highlighted.
 					blur: function(){
 						$(this).removeClass("shadow");
 					}

@@ -4,6 +4,7 @@ $db_database = 'demodb';
 $db_username = 'root';
 $db_password = '';
 
+// Sanitization functions, would be implemented in a non-demo version of the site
 function mysql_entities_fix_string($connection, $string)
 {
     return htmlentities(mysql_fix_string($connection, $string));
@@ -18,6 +19,7 @@ function mysql_fix_string($connection, $string)
     }
 }
 
+// Error handling function used to simplfy SQL connections
 function errorHandler($connection)
 {
 	if ($connection -> connect_error)

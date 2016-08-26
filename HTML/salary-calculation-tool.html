@@ -32,11 +32,15 @@
 		<script src="http://malsup.github.com/jquery.form.js"></script>
 		<script>
 			$(document).ready(function(){
+				//Load navigation bar into the navigationDiv
 				$("#navigationDiv").load("navigation-bar.html");
 
+				// Using ajax forms plugin to post to the php script via AJAX - no page refresh required
 				$("#variableForm").ajaxForm(function(data, status){
 					if (status == "success"){
+						// Add green box shadow to result field to show the finished calculation
 						$("#resultField").addClass("calculationSucceeded");
+						// Insert returned value into field
 						$("#resultField").val("$" + data);
 					}
 					else{
@@ -44,7 +48,9 @@
 					}
 				});
 
+				// jQuery on function to easily combine multiple events on one object
 				$(".variableField").on({
+					// Add and remove box shadows on focus/blur
 					focus: function(){
 						$(this).addClass("shadow");
 					},
@@ -55,13 +61,15 @@
 
 				$("#resultField").on({
 					focus: function()
-					{
+					{	
+						// If the green box shadow is still around from the finished calculation, clear on focus, replace w/ blue
 						if ($(this).hasClass("calculationSucceeded"))
 						{
 							$(this).removeClass("calculationSucceeded");
 						}
 						$(this).addClass("shadow");
 					},
+					// Removes box shadow on blur
 					blur: function(){
 						$(this).removeClass("shadow");
 					}

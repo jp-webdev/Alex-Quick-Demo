@@ -24,15 +24,19 @@
 		<script src="http://malsup.github.com/jquery.form.js"></script> 
 		<script>
 		$(document).ready(function(){
+			//Load navigation bar into the navigationDiv
 			$("#navigationDiv").load("navigation-bar.html");
 
+			// Using ajax forms plugin to post to the php script via AJAX - no page refresh required
 			$("#signupForm").ajaxForm(function(data, status){
 				if (status == "success"){
+					// If signup was successful, take user to login page
 					if (data.includes("successfully")){
 						alert(data);
 						window.location = "login.html";
 					}
 					else{
+						// Tells the user what the issue with their info was
 						alert(data);
 					}
 				}
@@ -41,7 +45,9 @@
 				}
 			});
 
+			// jQuery on function to easily combine multiple events on one object
 			$(".signupField").on({
+				// Add/remove box shadows on focus/blur
 				focus: function(){
 					$(this).addClass("shadow");
 				},
