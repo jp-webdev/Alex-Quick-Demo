@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Calculate Professor Salary</title>
+		<style>
+			body {
+				background-color: lightblue;
+				margin: 0;
+			}
+
+			.calculationFailed {
+				box-shadow: 0 0 5px red;
+			}
+
+			.calculationSucceeded {
+				box-shadow: 0 0 5px green;
+			}
+
+			#calculationTable {
+				border: 1px solid #999999;
+				font: normal 14px helvetica;
+				color: #444444;
+				margin: 0px auto;
+				margin-top: 13%;
+			}
+
+			.shadow {
+				box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+			}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="http://malsup.github.com/jquery.form.js"></script>
+		<script>
+			$(document).ready(function(){
+				$("#navigationDiv").load("navigation-bar.html");
+
+				$("#variableForm").ajaxForm(function(data, status){
+					if (status == "success"){
+						$("#resultField").addClass("calculationSucceeded");
+						$("#resultField").val("$" + data);
+					}
+					else{
+						alert("There was an error with the AJAX submission.");
+					}
+				});
+
+				$(".variableField").on({
+					focus: function(){
+						$(this).addClass("shadow");
+					},
+					blur: function(){
+						$(this).removeClass("shadow");
+					}
+				});
+
+				$("#resultField").on({
+					focus: function()
+					{
+						if ($(this).hasClass("calculationSucceeded"))
+						{
+							$(this).removeClass("calculationSucceeded");
+						}
+						$(this).addClass("shadow");
+					},
+					blur: function(){
+						$(this).removeClass("shadow");
+					}
+				});
+			});
+		</script>
+	</head>
+<body>
+	<div id="navigationDiv"></div>
+	<div width="800px" height="250px">
+	<table id="calculationTable" class="signup" border="0" cellpadding="2" cellspacing="5" bgcolor="#eeeeee">
+		<th colspan="2" align="center">Insert Professor Information</th>
+		<form method="post" action="../PHP/salaryCalculator.php" id="variableForm">
+		<tr><td>Class Size</td>
+			<td><input type="number" name="classSize" id="sizeField" class="variableField"></td></tr>
+		<tr><td>Base Salary</td>
+			<td><input type="number" name="baseSalary" id="salaryField" class="variableField"></td></tr>
+		<tr><td>Professor Status Index</td>
+			<td><input type="number" step="any" value="1" name="statusIndex" id="statusField" class="variableField"></td></tr>
+		<tr><td colspan="2" align="center"><input type="submit" value="Submit Parameters"></td></tr>
+		</form>
+		<tr><td>Result</td>
+			<td><input type="text" id="resultField" value=""></td></tr>
+	</table>
+	</div>
+</body>
+</html>

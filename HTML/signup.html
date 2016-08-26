@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Signup!</title>
+		<style>
+			body {
+				background-color: lightblue;
+				margin: 0;
+			}
+
+			.signupTable {
+				border:1px solid #999999;
+				font:  normal 14px helvetica;
+				color: #444444;
+				margin: 0 auto;
+				margin-top: 13%;
+			}
+
+			.shadow {
+				box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+			}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="http://malsup.github.com/jquery.form.js"></script> 
+		<script>
+		$(document).ready(function(){
+			$("#navigationDiv").load("navigation-bar.html");
+
+			$("#signupForm").ajaxForm(function(data, status){
+				if (status == "success"){
+					if (data.includes("successfully")){
+						alert(data);
+						window.location = "login.html";
+					}
+					else{
+						alert(data);
+					}
+				}
+				else{
+					alert("Something went wrong!");
+				}
+			});
+
+			$(".signupField").on({
+				focus: function(){
+					$(this).addClass("shadow");
+				},
+				blur: function(){
+					$(this).removeClass("shadow");
+				}
+			});
+		});
+
+		</script>
+	</head>
+	<body>
+	<div id="navigationDiv"></div>
+		<table class="signupTable" border="0" cellpadding="2" cellspacing="5" bgcolor="#eeeeee">
+			<th colspan="2" align="center">Sign Up</th>
+			<form method="post" action="../PHP/signup.php" id="signupForm">
+				<tr><td>Name</td>
+					<td><input type="text" maxlength="32" name="name" class="signupField"></td></tr>
+				<tr><td>Username</td>
+					<td><input type="text" maxlength="16" name="username" class="signupField"></td></tr>
+				<tr><td>Password</td>
+					<td><input type="password" maxlength="24" name="password" class="signupField"></td></tr>
+				<tr><td>Confirm Password</td>
+					<td><input type="password" maxlength="24" name="pass_confirm" class="signupField"></td></tr>
+				<tr><td colspan="2" align="center"><input type="submit" class="submitButton" value="Sign Up!"></td></tr>
+			</form>
+		</table>
+	</body>
+</html>

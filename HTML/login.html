@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Login!</title>
+		<style>
+			body {
+				background-color: lightblue;
+				margin: 0;
+			}
+
+			.loginFailed {
+				box-shadow: 0 0 5px red;
+			}
+
+			#loginTable {
+				border: 1px solid #999999;
+				font: normal 14px helvetica;
+				color: #444444;
+				margin: 0px auto;
+				margin-top: 13%;
+			}
+
+			.shadow {
+				box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+			}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="http://malsup.github.com/jquery.form.js"></script>
+		<script>
+			$(document).ready(function(){
+				$("#navigationDiv").load("navigation-bar.html");
+
+				$("#loginForm").ajaxForm(function(data, status){
+					if (status == "success"){
+						if (!data.includes('Redirecting')){
+							alert(data);
+							$(".loginField").addClass("loginFailed");
+						}
+						else{
+							alert(data);
+							window.location = "salary-calculation-tool.html";
+						}
+					}
+					else{
+						alert("Something went wrong!");
+					}
+
+				});
+
+				$(".loginField").on({
+					focus: function()
+					{
+						if ($(this).hasClass("loginFailed"))
+						{
+							$(this).removeClass("loginFailed");
+						}
+						$(this).addClass("shadow");
+					},
+					blur: function(){
+						$(this).removeClass("shadow");
+					}
+				});
+			});
+		</script>
+	</head>
+<body>
+<div id="navigationDiv"></div>
+	<div width="800px" height="250px">
+	<table id="loginTable" class="signup" border="0" cellpadding="2" cellspacing="5" bgcolor="#eeeeee">
+		<th colspan="2" align="center">Login</th>
+		<form method="post" action="../PHP/login.php" id="loginForm">
+		<tr><td>Username</td>
+			<td><input type="text" maxlength="16" name="username" class="loginField"></td></tr>
+		<tr><td>Password</td>
+			<td><input type="password" maxlength="24" name="password" class="loginField"></td></tr>
+		<tr><td colspan="2" align="center"><input type="submit" value="Submit"></td></tr>
+		</form>
+	</table>
+	</div>
+</body>
+</html>
